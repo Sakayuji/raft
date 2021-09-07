@@ -223,14 +223,14 @@ func nextConfiguration(current Configuration, currentIndex uint64, change config
 			// coordinates with the replication goroutines today. So, for now, the
 			// server will have a vote right away, and the Promote case below is
 			// unused.
-			Suffrage: Voter,
+			Suffrage: Staging,
 			ID:       change.serverID,
 			Address:  change.serverAddress,
 		}
 		found := false
 		for i, server := range configuration.Servers {
 			if server.ID == change.serverID {
-				if server.Suffrage == Voter {
+				if server.Suffrage != Staging {
 					configuration.Servers[i].Address = change.serverAddress
 				} else {
 					configuration.Servers[i] = newServer
